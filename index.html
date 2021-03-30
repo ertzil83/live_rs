@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+<head>
+  
+  <title>RS Live</title>
+  <meta charset = "UTF-8" />
+  <base href="./">
+  
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+
+</head>
+<body>
+  <style>
+    .bg_video, iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 56.25vw;
+  /* 9/16*100 = 56.25 */
+  min-height: 100vh;
+  min-width: 177.77vh;
+  /* 16/9*100 = 177.77 */
+}
+
+iframe {
+  opacity: 0;
+}
+
+iframe.loaded {
+  opacity: 1;
+}
+  </style>
+  <div id="youtubeEmbed" class="bg_video" data-video-id="Tb1lR8Z5oM"></div>
+ 
+  
+  <!--<div id="player"></div>-->
+  <script>
+    // Get element
+var youtubeEmbedElement = document.getElementById("youtubeEmbed");
+
+// Add YouTube API script
+var tag = document.createElement("script");
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName("script")[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var player;
+var videoId = youtubeEmbedElement.dataset.videoId;
+var startSeconds = 184;
+var endSeconds = 210;
+
+onYouTubeIframeAPIReady = function () {
+  player = new YT.Player("youtubeEmbed", {
+    videoId: 'tr4B5UYxEK8', // YouTube Video ID
+    playerVars: {
+      autoplay: 1, // Auto-play the video on load
+      autohide: 1, // Hide video controls when playing
+      disablekb: 1,
+      controls: 0, // Hide pause/play buttons in player
+      showinfo: 0, // Hide the video title
+      modestbranding: 1, // Hide the Youtube Logo
+      fs: 0, // Hide the full screen button
+      rel: 0,
+      enablejsapi: 1
+      
+    },
+    events: {
+      onReady: function (e) {
+        e.target.mute();
+        e.target.playVideo();
+      },
+      onStateChange: function (e) {
+        if (e.data === YT.PlayerState.PLAYING) {
+          document.getElementById("youtubeEmbed").classList.add("loaded");
+        }
+
+        if (e.data === YT.PlayerState.ENDED) {
+          // Loop from starting point
+          player.seekTo(startSeconds);
+        }
+      }
+    }
+  });
+};
+   /*
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    
+    var player, iframe;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '360',
+        width: '640',
+        videoId: 'tr4B5UYxEK8',
+        playerVars: {
+          'autoplay': 1,
+          'mute': 1 
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+   
+    function onPlayerReady(event) {
+      console.log("onplayerready barruan")
+      console.log(event);
+      iframe = $('#player');
+      player.playVideo();
+     
+      var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
+  
+    requestFullScreen.bind(iframe)();
+  
+  
+    }
+
+    
+    var done = false;
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING && !done) {
+       
+        done = true;
+      }
+    }
+    function stopVideo() {
+      player.stopVideo();
+    }*/
+  </script>
+</body>
+</html>
